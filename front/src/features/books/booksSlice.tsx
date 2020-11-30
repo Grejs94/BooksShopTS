@@ -35,7 +35,7 @@ export const booksSlice = createSlice({
                 }
               : basketItem
           )
-        : state.basket.push(item);
+        : [...state.basket, item];
     },
   },
 });
