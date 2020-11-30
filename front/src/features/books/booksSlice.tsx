@@ -2,13 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import api from "api";
 
+interface InitialState {
+  data: object[];
+  basket: any[];
+  status: string;
+}
+
+const initialState: InitialState = {
+  data: [],
+  basket: [],
+  status: "iddle",
+};
+
 export const booksSlice = createSlice({
   name: "books",
-  initialState: {
-    data: [],
-    basket: [],
-    status: "iddle",
-  },
+  initialState: initialState,
   reducers: {
     fetchBooksDataStarted: (state) => {
       state.status = "inProgress";
@@ -45,10 +53,9 @@ export const {
   fetchBooksDataDataSucceeded,
   fetchBooksDataDataFailed,
   addItemToBasket,
-  setData,
 } = booksSlice.actions;
 
-export const fetchBooks = (pageNumber) => async (dispatch) => {
+export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
   dispatch(fetchBooksDataStarted());
 
   try {
@@ -58,11 +65,23 @@ export const fetchBooks = (pageNumber) => async (dispatch) => {
     dispatch(fetchBooksDataDataFailed());
   }
 };
-export const selectBooksData = (state) => state.books.data;
-export const selectBooksBasket = (state) => state.books.basket;
-export const selectBooksBasketValue = (state) =>
-  state.books.basket.reduce((acc, item) => acc + item.value, 0);
+export const selectBooksData = (state: any) => state.books.data;
+export const selectBooksBasket = (state: any) => state.books.basket;
 
-export const selectBooksFetchStatus = (state) => state.books.status;
+interface Item {
+  author: string;
+  cover_url: string;
+  currency: string;
+  id: number;
+  pages: number;
+  price: number;
+  title: string;
+  value: number;
+}
+
+export const selectBooksBasketValue = (state: any) =>
+  state.books.basket.reduce((acc: number, item: Item) => acc + item.value, 0);
+
+export const selectBooksFetchStatus = (state: any) => state.books.status;
 
 export default booksSlice.reducer;
