@@ -1,3 +1,4 @@
-import Menu from "./Menu";
+import Menu from "./Menu/index";
+import Table from "./Table/index";
 
-export { Menu };
+export { Menu, Table };

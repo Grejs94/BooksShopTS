@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import {
   AppBar,
@@ -15,7 +15,11 @@ import { selectBooksBasketValue } from "features/books/booksSlice";
 
 import { useStyles } from "./styles";
 
-const Menu = ({ title }) => {
+type Props = {
+  title: string;
+};
+
+const Menu: FC<Props> = ({ title }) => {
   const basketValue = useSelector(selectBooksBasketValue);
   const classes = useStyles();
 
