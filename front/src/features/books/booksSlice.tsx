@@ -1,18 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import api from "api";
+import api from "api/index";
+import { initialState } from "./helperData";
 
-interface InitialState {
-  data: object[];
-  basket: any[];
-  status: string;
-}
-
-const initialState: InitialState = {
-  data: [],
-  basket: [],
-  status: "iddle",
-};
+import { IfetchBooksData, IAddItemToBasket } from "../interfaces/index";
 
 export const booksSlice = createSlice({
   name: "books",
@@ -21,14 +12,17 @@ export const booksSlice = createSlice({
     fetchBooksDataStarted: (state) => {
       state.status = "inProgress";
     },
-    fetchBooksDataDataSucceeded: (state, action) => {
+    fetchBooksDataSucceeded: (
+      state,
+      action: PayloadAction<IfetchBooksData>
+    ) => {
       state.data = [...action.payload.data];
       state.status = "succeeded";
     },
-    fetchBooksDataDataFailed: (state) => {
+    fetchBooksDataFailed: (state) => {
       state.status = "failed";
     },
-    addItemToBasket: (state, action) => {
+    addItemToBasket: (state, action: PayloadAction<IAddItemToBasket>) => {
       const { id } = action.payload;
       const isInBasket = state.basket.find((item) => item.id === id);
 
@@ -50,8 +44,8 @@ export const booksSlice = createSlice({
 
 export const {
   fetchBooksDataStarted,
-  fetchBooksDataDataSucceeded,
-  fetchBooksDataDataFailed,
+  fetchBooksDataSucceeded,
+  fetchBooksDataFailed,
   addItemToBasket,
 } = booksSlice.actions;
 
@@ -60,9 +54,9 @@ export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
 
   try {
     const data = await api.books.fetchBooks(pageNumber);
-    dispatch(fetchBooksDataDataSucceeded(data.data));
+    dispatch(fetchBooksDataSucceeded(data.data));
   } catch (error) {
-    dispatch(fetchBooksDataDataFailed());
+    dispatch(fetchBooksDataFailed());
   }
 };
 export const selectBooksData = (state: any) => state.books.data;

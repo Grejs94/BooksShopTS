@@ -19,7 +19,6 @@ function App() {
                 component={route.component}
               />
             ))}
-            asdasdasd
           </Switch>
         </Container>
       </Router>
