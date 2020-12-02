@@ -2,9 +2,7 @@ import React from "react";
 
 import * as Styles from "./styles";
 
-interface Props {}
-
-const Message: React.FC<Props> = () => {
+const Message: React.FC = () => {
   return <Styles.Wrapper>Twój koszyk jest pusty!</Styles.Wrapper>;
 };
 

@@ -1,6 +1,12 @@
 import { MainPage, BasketPage } from "pages/index";
 
-export const mainRoutes = [
+type Route = {
+  path: string;
+  component: () => JSX.Element;
+  exact?: boolean;
+};
+
+export const mainRoutes: Route[] = [
   {
     path: "/",
     component: MainPage,
