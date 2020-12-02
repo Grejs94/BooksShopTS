@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Container } from "@material-ui/core";
 
 import { Menu } from "components";
 import { fetchBooks } from "features/books/booksSlice";
@@ -15,8 +16,10 @@ const MainPage = () => {
 
   return (
     <>
-      <Menu title="Lista książek" />
-      <Grid />
+      <Container maxWidth="lg">
+        <Menu title="Lista książek" />
+        <Grid />
+      </Container>
     </>
   );
 };

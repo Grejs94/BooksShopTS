@@ -12,17 +12,8 @@ import {
 
 import { selectBooksBasket } from "features/books/booksSlice";
 
+import { IconsList, SettingsIcon } from "./components";
 import { useStyles, InfoElement } from "./styles";
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
 
 interface Book {
   author: string;
@@ -37,12 +28,20 @@ interface Book {
 
 export default function BasicTable() {
   const basket = useSelector(selectBooksBasket);
-  console.log(basket);
 
   const classes = useStyles();
 
   const newRows = basket.map((book: Book) => {
-    const { author, title, pages, price, currency, cover_url, id } = book;
+    const {
+      author,
+      title,
+      pages,
+      price,
+      currency,
+      cover_url,
+      id,
+      value,
+    } = book;
     return {
       author,
       title,
@@ -51,37 +50,35 @@ export default function BasicTable() {
       currency,
       cover_url,
       id,
+      value,
     };
   });
-
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
 
   return (
     <TableContainer component={Paper} className={classes.tablecontainer}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className={(classes.pictureCell, classes.tableCell)}>
-              Pictures
+            <TableCell align="center" className={classes.headPictureCellVinal}>
+              Zdjęcia
+            </TableCell>
+            <TableCell align="center" className={classes.headInfoCellVinal}>
+              Informacje
             </TableCell>
             <TableCell
-              align="left"
-              className={(classes.infoCell, classes.tableCell)}
-            >
-              Info
-            </TableCell>
+              align="right"
+              className={classes.headSettingsCellVinal}
+            />
           </TableRow>
         </TableHead>
         <TableBody>
           {newRows.map((row: Book) => (
             <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
+              <TableCell
+                component="th"
+                scope="row"
+                className={classes.bodyPictureCellVinal}
+              >
                 <div className={classes.imageContainer}>
                   <img
                     className={classes.image}
@@ -90,15 +87,23 @@ export default function BasicTable() {
                   />
                 </div>
               </TableCell>
-              <TableCell
-                align="left"
-                className={(classes.infoCell, classes.tableCell)}
-              >
+              <TableCell align="left" className={classes.bodyInfoCellVinal}>
                 <div className={classes.infoContainer}>
-                  <InfoElement>{`Author: ${row.author}`}</InfoElement>
-                  <InfoElement>{`Title: ${row.title}`}</InfoElement>
-                  <InfoElement>{`Pages: ${row.pages}`}</InfoElement>
-                  <InfoElement>{`Price: ${row.price} ${row.currency}`}</InfoElement>
+                  <InfoElement>{`Autor: ${row.author}`}</InfoElement>
+                  <InfoElement>{`Tytuł: ${row.title}`}</InfoElement>
+                  <InfoElement>{`Stron: ${row.pages}`}</InfoElement>
+                  <InfoElement>{`Cena: ${row.price} ${row.currency}`}</InfoElement>
+                  <div>
+                    <IconsList value={row.value} id={row.id} />
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell
+                align="right"
+                className={classes.bodySettingsCellVinal}
+              >
+                <div className={classes.searchIconContainer}>
+                  <SettingsIcon id={row.id} />
                 </div>
               </TableCell>
             </TableRow>

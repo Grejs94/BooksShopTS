@@ -1,15 +1,21 @@
 import React from "react";
-import Container from "@material-ui/core/Container";
+import { useSelector } from "react-redux";
 
 import { Menu, Table } from "components";
+import { selectBooksBasket } from "features/books/booksSlice";
+
+import * as Styles from "./styles";
+
+import { Message } from "./components";
 
 const BasketPage = () => {
+  const BooksBasket = useSelector(selectBooksBasket);
   return (
     <>
       <Menu title="Koszyk" />
-      <Container maxWidth="md">
-        <Table />
-      </Container>
+      <Styles.Container>
+        {BooksBasket.length > 0 ? <Table /> : <Message />}
+      </Styles.Container>
     </>
   );
 };

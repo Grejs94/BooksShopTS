@@ -9,6 +9,37 @@ export const booksSlice = createSlice({
   name: "books",
   initialState: initialState,
   reducers: {
+    incrementValue: (state, action) => {
+      state.basket = state.basket.map((item) => ({
+        ...item,
+        value: item.id === action.payload ? item.value + 1 : item.value,
+      }));
+    },
+    decrementValue: (state, action) => {
+      state.basket = state.basket.map((item) => ({
+        ...item,
+        value:
+          item.id === action.payload && item.value > 1
+            ? item.value - 1
+            : item.value,
+      }));
+    },
+    deleteItem: (state, action) => {
+      state.basket = state.basket.filter((item) => item.id !== action.payload);
+    },
+    setValue: (state, action) => {
+      if (action.payload.value < 1) {
+        return;
+      }
+
+      state.basket = state.basket.map((item) => ({
+        ...item,
+        value:
+          item.id === action.payload.id
+            ? parseInt(action.payload.value)
+            : item.value,
+      }));
+    },
     fetchBooksDataStarted: (state) => {
       state.status = "inProgress";
     },
@@ -47,6 +78,10 @@ export const {
   fetchBooksDataSucceeded,
   fetchBooksDataFailed,
   addItemToBasket,
+  incrementValue,
+  decrementValue,
+  deleteItem,
+  setValue,
 } = booksSlice.actions;
 
 export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
