@@ -15,7 +15,7 @@ import { selectBooksBasket } from "features/books/booksSlice";
 import { IconsList, SettingsIcon } from "./components";
 import { useStyles, InfoElement } from "./styles";
 
-interface Book {
+interface IBook {
   author: string;
   cover_url: string;
   currency: string;
@@ -31,7 +31,7 @@ export default function BasicTable() {
 
   const classes = useStyles();
 
-  const newRows = basket.map((book: Book) => {
+  const newRows = basket.map((book: IBook) => {
     const {
       author,
       title,
@@ -72,7 +72,7 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {newRows.map((row: Book) => (
+          {newRows.map((row: IBook) => (
             <TableRow key={row.id}>
               <TableCell
                 component="th"
