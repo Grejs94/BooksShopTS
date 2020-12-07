@@ -1,4 +1,4 @@
-import { MainPage, BasketPage } from "pages/index";
+import { MainPage, BasketPage, SummaryPage } from "pages/index";
 
 type Route = {
   path: string;
@@ -15,5 +15,9 @@ export const mainRoutes: Route[] = [
   {
     path: "/BasketPage",
     component: BasketPage,
+  },
+  {
+    path: "/SummaryPage",
+    component: SummaryPage,
   },
 ];

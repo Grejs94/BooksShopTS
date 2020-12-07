@@ -51,7 +51,16 @@ export const booksSlice = createSlice({
       state.status = "succeeded";
     },
     fetchBooksDataFailed: (state) => {
-      state.status = "failed";
+      state.sendStatus = "failed";
+    },
+    sendFormStarted: (state) => {
+      state.sendStatus = "inProgress";
+    },
+    sendFormSucceeded: (state) => {
+      state.sendStatus = "succeeded";
+    },
+    sendFormFailed: (state) => {
+      state.sendStatus = "failed";
     },
     addItemToBasket: (state, action: PayloadAction<IAddItemToBasket>) => {
       const { id } = action.payload;
@@ -77,12 +86,26 @@ export const {
   fetchBooksDataStarted,
   fetchBooksDataSucceeded,
   fetchBooksDataFailed,
+  sendFormStarted,
+  sendFormSucceeded,
+  sendFormFailed,
   addItemToBasket,
   incrementValue,
   decrementValue,
   deleteItem,
   setValue,
 } = booksSlice.actions;
+
+export const sendForm = (data: object) => async (dispatch: any) => {
+  dispatch(sendFormStarted());
+
+  try {
+    await api.books.sendOrder(data);
+    dispatch(sendFormSucceeded());
+  } catch (error) {
+    dispatch(sendFormFailed());
+  }
+};
 
 export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
   dispatch(fetchBooksDataStarted());

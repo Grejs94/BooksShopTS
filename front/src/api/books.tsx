@@ -8,4 +8,14 @@ export const books = {
 
     return response;
   },
+  sendOrder: (data: object) => {
+    axios
+      .post(`${config.urlSendOrder}`, data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
 };
