@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+import { theme } from "assets/theme";
+
+const { colors, media } = theme;
+
 const btn = (light: string, dark: string) => css`
   white-space: nowrap;
   display: inline-block;
@@ -39,18 +43,25 @@ export default styled.div`
     margin: 10px auto;
     border: 1px solid #ccc;
     padding: 20px;
+    ${media.sm} {
+      padding: 0;
+    }
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 
     & > div {
       display: flex;
       flex-flow: row nowrap;
+
       line-height: 2em;
       margin: 5px;
       & > label {
         color: #333;
         width: 110px;
         font-size: 1em;
+        ${media.sm} {
+          font-size: 0.9em;
+        }
         line-height: 32px;
       }
       & > input,
@@ -81,10 +92,22 @@ export default styled.div`
       flex-flow: row nowrap;
       justify-content: center;
       margin-top: 25px;
+
+      ${media.sm} {
+        flex-direction: column;
+      }
+
+      & > .buttonContainer {
+        display: flex;
+        justify-content: center;
+      }
     }
     button {
       margin: 0 10px;
       ${btnPrimary};
+      ${media.sm} {
+        margin: 10px;
+      }
     }
     pre {
       border: 1px solid #ccc;

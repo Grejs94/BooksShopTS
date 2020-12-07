@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Form, Field } from "react-final-form";
 import { Link } from "react-router-dom";
 
-import { selectBooksBasket, sendForm } from "features/books/booksSlice";
+import {
+  selectBooksBasket,
+  sendForm,
+  setOrderCompleted,
+  cleanBasket,
+} from "features/books/booksSlice";
 import Styles from "./styles";
 
 const FormComponent = () => {
@@ -40,6 +45,8 @@ const FormComponent = () => {
     };
 
     dispatch(sendForm(order));
+    dispatch(setOrderCompleted());
+    dispatch(cleanBasket());
   };
 
   return (
@@ -47,8 +54,15 @@ const FormComponent = () => {
       <Form
         onSubmit={onSubmit}
         initialValues={{}}
-        render={({ handleSubmit, submitting, pristine }) => (
-          <form onSubmit={handleSubmit}>
+        render={({ handleSubmit, submitting, pristine, form }) => (
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+              setTimeout(() => {
+                form.reset();
+              }, 1000);
+            }}
+          >
             <div>
               <label>Imię</label>
               <Field
@@ -87,12 +101,16 @@ const FormComponent = () => {
             </div>
 
             <div className="buttons">
-              <Link to="/BasketPage">
-                <button type="button">Powrót do koszyka</button>
-              </Link>
-              <button type="submit" disabled={submitting || pristine}>
-                Zamawiam i płacę
-              </button>
+              <div className="buttonContainer">
+                <Link to="/BasketPage">
+                  <button type="button">Powrót do koszyka</button>
+                </Link>
+              </div>
+              <div className="buttonContainer">
+                <button type="submit" disabled={submitting || pristine}>
+                  Zamawiam i płacę
+                </button>
+              </div>
             </div>
           </form>
         )}

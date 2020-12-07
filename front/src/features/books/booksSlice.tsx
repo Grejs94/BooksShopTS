@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import api from "api/index";
-import { initialState } from "./helperData";
 
-import { IfetchBooksData, IAddItemToBasket } from "../interfaces/index";
+import { initialState } from "./helperData";
+import { IAddItemToBasket, IfetchBooksData } from "../interfaces/index";
 
 export const booksSlice = createSlice({
   name: "books",
   initialState: initialState,
   reducers: {
+    setOrderCompleted: (state) => {
+      state.orderCompleted = true;
+    },
+    setOrderNotCompleted: (state) => {
+      state.orderCompleted = false;
+    },
     incrementValue: (state, action) => {
       state.basket = state.basket.map((item) => ({
         ...item,
@@ -79,6 +85,9 @@ export const booksSlice = createSlice({
           )
         : [...state.basket, item];
     },
+    cleanBasket: (state) => {
+      state.basket = [];
+    },
   },
 });
 
@@ -94,6 +103,9 @@ export const {
   decrementValue,
   deleteItem,
   setValue,
+  setOrderCompleted,
+  setOrderNotCompleted,
+  cleanBasket,
 } = booksSlice.actions;
 
 export const sendForm = (data: object) => async (dispatch: any) => {
@@ -112,6 +124,7 @@ export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
 
   try {
     const data = await api.books.fetchBooks(pageNumber);
+
     dispatch(fetchBooksDataSucceeded(data.data));
   } catch (error) {
     dispatch(fetchBooksDataFailed());
@@ -119,6 +132,8 @@ export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
 };
 export const selectBooksData = (state: any) => state.books.data;
 export const selectBooksBasket = (state: any) => state.books.basket;
+export const selectBooksOrderCompleted = (state: any) =>
+  state.books.orderCompleted;
 
 interface Item {
   author: string;
