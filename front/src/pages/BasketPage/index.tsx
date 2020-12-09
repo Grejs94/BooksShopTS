@@ -16,16 +16,18 @@ const BasketPage = () => {
   return (
     <>
       <Menu title="Koszyk" />
-      <Styles.Container>{notEmpty ? <Table /> : <Message />}</Styles.Container>
-      <Styles.ButtonContainer>
-        {notEmpty ? (
-          <Link to="/SummaryPage" style={{ textDecoration: "none" }}>
+      <Styles.Container maxWidth="md">
+        {notEmpty ? <Table /> : <Message />}
+        <Styles.ButtonContainer>
+          {notEmpty ? (
+            <Link to="/SummaryPage" style={{ textDecoration: "none" }}>
+              <Modal />
+            </Link>
+          ) : (
             <Modal />
-          </Link>
-        ) : (
-          <Modal />
-        )}
-      </Styles.ButtonContainer>
+          )}
+        </Styles.ButtonContainer>
+      </Styles.Container>
     </>
   );
 };

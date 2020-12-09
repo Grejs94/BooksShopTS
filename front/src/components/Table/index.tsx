@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 import {
   Table,
   TableBody,
-  TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   Paper,
@@ -14,7 +12,7 @@ import { selectBooksBasket } from "features/books/booksSlice";
 import { showPrice } from "utils/showPrice";
 
 import { IconsList, SettingsIcon } from "./components";
-import { useStyles, InfoElement } from "./styles";
+import * as Styles from "./styles";
 
 interface IBook {
   author: string;
@@ -29,8 +27,6 @@ interface IBook {
 
 export default function BasicTable() {
   const basket = useSelector(selectBooksBasket);
-
-  const classes = useStyles();
 
   const newRows = basket.map((book: IBook) => {
     const {
@@ -56,63 +52,47 @@ export default function BasicTable() {
   });
 
   return (
-    <TableContainer component={Paper} className={classes.tablecontainer}>
+    <Styles.TableContainer component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" className={classes.headPictureCellVinal}>
-              Zdjęcia
-            </TableCell>
-            <TableCell align="center" className={classes.headInfoCellVinal}>
+            <Styles.TableCellHead align="center">Zdjęcia</Styles.TableCellHead>
+            <Styles.TableCellHead align="center">
               Informacje
-            </TableCell>
-            <TableCell
-              align="right"
-              className={classes.headSettingsCellVinal}
-            />
+            </Styles.TableCellHead>
+            <Styles.TableCellHead align="right" />
           </TableRow>
         </TableHead>
         <TableBody>
           {newRows.map((row: IBook) => (
             <TableRow key={row.id}>
-              <TableCell
-                component="th"
-                scope="row"
-                className={classes.bodyPictureCellVinal}
-              >
-                <div className={classes.imageContainer}>
-                  <img
-                    className={classes.image}
-                    src={row.cover_url}
-                    alt="zdjęcie"
-                  />
-                </div>
-              </TableCell>
-              <TableCell align="left" className={classes.bodyInfoCellVinal}>
-                <div className={classes.infoContainer}>
-                  <InfoElement>{`Autor: ${row.author}`}</InfoElement>
-                  <InfoElement>{`Tytuł: ${row.title}`}</InfoElement>
-                  <InfoElement>{`Stron: ${row.pages}`}</InfoElement>
-                  <InfoElement>{`Cena: ${showPrice(row.price)} ${
+              <Styles.TableCellBodyPicture component="th" scope="row">
+                <Styles.ImageContainer>
+                  <Styles.Image src={row.cover_url} alt="zdjęcie" />
+                </Styles.ImageContainer>
+              </Styles.TableCellBodyPicture>
+              <Styles.TableCellBodyInfo align="left">
+                <Styles.InfoContainer>
+                  <Styles.InfoElement>{`Autor: ${row.author}`}</Styles.InfoElement>
+                  <Styles.InfoElement>{`Tytuł: ${row.title}`}</Styles.InfoElement>
+                  <Styles.InfoElement>{`Stron: ${row.pages}`}</Styles.InfoElement>
+                  <Styles.InfoElement>{`Cena: ${showPrice(row.price)} ${
                     row.currency
-                  }`}</InfoElement>
+                  }`}</Styles.InfoElement>
                   <div>
                     <IconsList value={row.value} id={row.id} />
                   </div>
-                </div>
-              </TableCell>
-              <TableCell
-                align="right"
-                className={classes.bodySettingsCellVinal}
-              >
-                <div className={classes.searchIconContainer}>
+                </Styles.InfoContainer>
+              </Styles.TableCellBodyInfo>
+              <Styles.TableCellBodySettings align="right">
+                <Styles.SearchIconContainer>
                   <SettingsIcon id={row.id} />
-                </div>
-              </TableCell>
+                </Styles.SearchIconContainer>
+              </Styles.TableCellBodySettings>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </Styles.TableContainer>
   );
 }

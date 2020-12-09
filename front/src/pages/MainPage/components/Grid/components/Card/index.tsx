@@ -1,15 +1,13 @@
 import React, { FC } from "react";
 import {
-  Card as CardMaterial,
   CardActionArea,
   CardActions,
   CardContent,
-  CardMedia,
   Button,
   Typography,
 } from "@material-ui/core";
 
-import { useStyles } from "./styles.js";
+import * as Styles from "./styles";
 
 interface Book {
   book: {
@@ -24,18 +22,11 @@ interface Book {
 }
 
 const Card: FC<Book> = ({ book, handleClick }) => {
-  const classes = useStyles();
-
   const { cover_url, title, author, pages } = book;
-
   return (
-    <CardMaterial className={classes.root}>
+    <Styles.CardMaterial>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={cover_url}
-          title="Contemplative Reptile"
-        />
+        <Styles.CardMedia image={cover_url} title="Contemplative Reptile" />
         <CardContent>
           <Typography gutterBottom variant="h6" component="h4">
             {title}
@@ -53,7 +44,7 @@ const Card: FC<Book> = ({ book, handleClick }) => {
           DODAJ DO KOSZYKA
         </Button>
       </CardActions>
-    </CardMaterial>
+    </Styles.CardMaterial>
   );
 };
 

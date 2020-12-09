@@ -38,8 +38,10 @@ export const css: Css = {
 
 type Colors = {
   black: string;
+  white: string;
 };
 
 export const colors: Colors = {
   black: "black",
+  white: "white",
 };

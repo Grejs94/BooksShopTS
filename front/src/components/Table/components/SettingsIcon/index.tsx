@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { deleteItem } from "features/books/booksSlice";
 
-import { useStyles, MenuItem } from "./styles";
+import * as Styles from "./styles";
 
 interface Props {
   id: number;
@@ -16,7 +16,6 @@ const MenuAppBar: React.FC<Props> = (id) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const classes = useStyles();
 
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -35,8 +34,7 @@ const MenuAppBar: React.FC<Props> = (id) => {
 
   return (
     <div>
-      <IconButton
-        className={classes.button}
+      <Styles.IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
         aria-haspopup="true"
@@ -44,7 +42,7 @@ const MenuAppBar: React.FC<Props> = (id) => {
         color="inherit"
       >
         <SettingsIcon />
-      </IconButton>
+      </Styles.IconButton>
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
@@ -60,7 +58,9 @@ const MenuAppBar: React.FC<Props> = (id) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleDelete(id)}>Delete Item</MenuItem>
+        <Styles.MenuItem onClick={() => handleDelete(id)}>
+          Delete Item
+        </Styles.MenuItem>
       </Menu>
     </div>
   );

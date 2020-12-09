@@ -5,37 +5,13 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Button } from "components";
-
 import { selectBooksBasket } from "features/books/booksSlice";
 
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+import * as Styles from "./styles";
 
 export default function SimpleModal() {
   const BooksBasket = useSelector(selectBooksBasket);
 
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -51,7 +27,7 @@ export default function SimpleModal() {
   };
 
   const body = (
-    <div style={modalStyle} className={classes.paper}>
+    <Styles.BodyWrapper>
       <h2 id="simple-modal-title">Twój koszyk jest pusty</h2>
       <p id="simple-modal-description">
         Przed przejściem do podsumowawnia zamówienie proszę o wybranie
@@ -62,7 +38,7 @@ export default function SimpleModal() {
           Powrót do Sklepu
         </Button>
       </Link>
-    </div>
+    </Styles.BodyWrapper>
   );
 
   return (
