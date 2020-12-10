@@ -6,6 +6,7 @@ import {
   addItemToBasket,
   selectBooksFetchStatus,
   selectBooksData,
+  setOrderNotCompleted,
 } from "features/books/booksSlice";
 
 import { Card } from "./components/index";
@@ -28,6 +29,7 @@ export default function SpacingGrid() {
 
   const handleclick = (item: Book) => {
     dispatch(addItemToBasket(item));
+    dispatch(setOrderNotCompleted());
   };
 
   if (status === "failed") {

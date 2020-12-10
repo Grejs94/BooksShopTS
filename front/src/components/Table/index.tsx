@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { selectBooksBasket } from "features/books/booksSlice";
+import { showPrice } from "utils/showPrice";
 
 import { IconsList, SettingsIcon } from "./components";
 import { useStyles, InfoElement } from "./styles";
@@ -92,7 +93,9 @@ export default function BasicTable() {
                   <InfoElement>{`Autor: ${row.author}`}</InfoElement>
                   <InfoElement>{`Tytuł: ${row.title}`}</InfoElement>
                   <InfoElement>{`Stron: ${row.pages}`}</InfoElement>
-                  <InfoElement>{`Cena: ${row.price} ${row.currency}`}</InfoElement>
+                  <InfoElement>{`Cena: ${showPrice(row.price)} ${
+                    row.currency
+                  }`}</InfoElement>
                   <div>
                     <IconsList value={row.value} id={row.id} />
                   </div>

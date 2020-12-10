@@ -18,3 +18,9 @@ export const Container = styled.div`
     padding: 0;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+`;

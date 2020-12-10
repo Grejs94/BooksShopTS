@@ -10,9 +10,16 @@ type Props = {
   customVariant?: string;
   color?: string;
   variant?: string;
+  type?: string;
+  disabled?: boolean;
 };
 
-const Button: React.FC<Props> = ({ handleClick, customVariant, ...rest }) => (
+const Button: React.FC<Props> = ({
+  handleClick,
+  customVariant,
+  disabled,
+  ...rest
+}) => (
   <CreateCustomMaterialUlComponent
     handleClick={handleClick}
     element={ButtonMaterial}

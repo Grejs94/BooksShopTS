@@ -6,6 +6,7 @@ interface Props {
   element: any;
   children: any;
   handleClick: any;
+  disabled?: boolean;
 }
 
 const CreateCustomMaterialUlInput: React.FC<Props> = ({
@@ -13,12 +14,13 @@ const CreateCustomMaterialUlInput: React.FC<Props> = ({
   element,
   children,
   handleClick,
+  disabled,
   ...rest
 }) => {
   const StyledElement = withStyles(styles)(element);
 
   return (
-    <StyledElement onClick={handleClick} {...rest}>
+    <StyledElement onClick={handleClick} disabled={disabled} {...rest}>
       {children}
     </StyledElement>
   );
