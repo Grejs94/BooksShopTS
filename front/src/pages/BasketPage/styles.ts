@@ -1,18 +1,11 @@
 import styled from "@emotion/styled";
+import { Container as MaterialContainer } from "@material-ui/core";
 
 import { theme } from "assets/theme";
 
 const { media } = theme;
 
-export const Container = styled.div`
-  width: 100%;
-  display: block;
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
-
+export const Container = styled(MaterialContainer)`
   ${media.xs} {
     margin: 0 auto;
     padding: 0;

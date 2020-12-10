@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Dispatch } from "redux";
 
 import api from "api/index";
+import { BasketItem, IfetchBooksData, Order } from "interfaces/books";
 
 import { initialState } from "./helperData";
-import { IAddItemToBasket, IfetchBooksData } from "../interfaces/index";
 
 export const booksSlice = createSlice({
   name: "books",
-  initialState: initialState,
+  initialState,
   reducers: {
-    setOrderCompleted: (state) => {
-      state.orderCompleted = true;
-    },
-    setOrderNotCompleted: (state) => {
-      state.orderCompleted = false;
+    setOrderCompleted: (state, action) => {
+      state.orderCompleted = action.payload;
     },
     incrementValue: (state, action) => {
       state.basket = state.basket.map((item) => ({
@@ -68,7 +66,7 @@ export const booksSlice = createSlice({
     sendFormFailed: (state) => {
       state.sendStatus = "failed";
     },
-    addItemToBasket: (state, action: PayloadAction<IAddItemToBasket>) => {
+    addItemToBasket: (state, action: PayloadAction<BasketItem>) => {
       const { id } = action.payload;
       const isInBasket = state.basket.find((item) => item.id === id);
 
@@ -104,11 +102,10 @@ export const {
   deleteItem,
   setValue,
   setOrderCompleted,
-  setOrderNotCompleted,
   cleanBasket,
 } = booksSlice.actions;
 
-export const sendForm = (data: object) => async (dispatch: any) => {
+export const sendForm = (data: Order) => async (dispatch: Dispatch) => {
   dispatch(sendFormStarted());
 
   try {
@@ -119,7 +116,9 @@ export const sendForm = (data: object) => async (dispatch: any) => {
   }
 };
 
-export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
+export const fetchBooks = (pageNumber: number) => async (
+  dispatch: Dispatch
+) => {
   dispatch(fetchBooksDataStarted());
 
   try {
@@ -135,19 +134,11 @@ export const selectBooksBasket = (state: any) => state.books.basket;
 export const selectBooksOrderCompleted = (state: any) =>
   state.books.orderCompleted;
 
-interface Item {
-  author: string;
-  cover_url: string;
-  currency: string;
-  id: number;
-  pages: number;
-  price: number;
-  title: string;
-  value: number;
-}
-
 export const selectBooksBasketValue = (state: any) =>
-  state.books.basket.reduce((acc: number, item: Item) => acc + item.value, 0);
+  state.books.basket.reduce(
+    (acc: number, item: BasketItem) => acc + item.value,
+    0
+  );
 
 export const selectBooksFetchStatus = (state: any) => state.books.status;
 

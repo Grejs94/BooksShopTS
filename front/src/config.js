@@ -1,9 +1,7 @@
 const apiUrls = {
-  developFetch: "http://localhost:3001/api/book?page=",
-  developSendOrder: "http://localhost:3001/api/order",
+  develop: "http://localhost:3001/api",
 };
 
 export const config = {
-  url: apiUrls.developFetch,
-  urlSendOrder: apiUrls.developSendOrder,
+  url: `${apiUrls.develop}`,
 };

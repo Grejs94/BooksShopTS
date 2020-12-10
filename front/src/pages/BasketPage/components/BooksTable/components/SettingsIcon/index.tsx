@@ -1,11 +1,11 @@
 import React from "react";
-import { IconButton, Menu } from "@material-ui/core";
+import { Menu } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useDispatch } from "react-redux";
 
 import { deleteItem } from "features/books/booksSlice";
 
-import { useStyles, MenuItem } from "./styles";
+import * as Styles from "./styles";
 
 interface Props {
   id: number;
@@ -16,35 +16,31 @@ const MenuAppBar: React.FC<Props> = (id) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const classes = useStyles();
 
-  const handleMenu = (event: any) => {
+  const openMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const closeMenu = () => {
     setAnchorEl(null);
   };
 
-  const handleDelete = (id: React.PropsWithChildren<{ id: number }>) => {
-    console.log(id);
-
+  const deleteBasketItem = (id: React.PropsWithChildren<{ id: number }>) => {
     setAnchorEl(null);
     dispatch(deleteItem(id.id));
   };
 
   return (
     <div>
-      <IconButton
-        className={classes.button}
+      <Styles.IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
         aria-haspopup="true"
-        onClick={handleMenu}
+        onClick={openMenu}
         color="inherit"
       >
         <SettingsIcon />
-      </IconButton>
+      </Styles.IconButton>
       <Menu
         id="menu-appbar"
         anchorEl={anchorEl}
@@ -58,9 +54,11 @@ const MenuAppBar: React.FC<Props> = (id) => {
           horizontal: "right",
         }}
         open={open}
-        onClose={handleClose}
+        onClose={closeMenu}
       >
-        <MenuItem onClick={() => handleDelete(id)}>Delete Item</MenuItem>
+        <Styles.MenuItem onClick={() => deleteBasketItem(id)}>
+          Delete Item
+        </Styles.MenuItem>
       </Menu>
     </div>
   );

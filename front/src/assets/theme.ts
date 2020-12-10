@@ -1,12 +1,11 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
-import { colors, media, css, themeCss } from "./variables";
+import { colors, media, font } from "./variables";
 
 export const theme = {
   colors,
   media,
-  css,
-  themeCss,
+  font,
 };
 
 export const themeMaterial = createMuiTheme(theme);

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 import { selectBooksBasketValue } from "features/books/booksSlice";
 
-import { useStyles } from "./styles";
+import { default as Styles } from "./styles";
 
 type Props = {
   title: string;
@@ -21,7 +21,6 @@ type Props = {
 
 const Menu: FC<Props> = ({ title }) => {
   const basketValue = useSelector(selectBooksBasketValue);
-  const classes = useStyles();
 
   return (
     <React.Fragment>
@@ -30,7 +29,7 @@ const Menu: FC<Props> = ({ title }) => {
           <Typography variant="h6" noWrap>
             {title}
           </Typography>
-          <div className={classes.grow} />
+          <Styles.GrowingDiv />
           <div>
             <Link to="/" style={{ color: "white" }}>
               <IconButton aria-label="shop" color="inherit">
@@ -47,7 +46,7 @@ const Menu: FC<Props> = ({ title }) => {
           </div>
         </Toolbar>
       </AppBar>
-      <Toolbar className={classes.margin} />
+      <Styles.Toolbar />
     </React.Fragment>
   );
 };

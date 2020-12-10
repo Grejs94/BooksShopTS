@@ -1,11 +1,18 @@
-import { makeStyles } from "@material-ui/core/styles";
+import styled from "@emotion/styled";
+import { Toolbar as MaterialToolbar } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-    marginBottom: 40,
-  },
-  margin: {
-    marginBottom: 40,
-  },
-}));
+const GrowingDiv = styled.div`
+  flex-grow: 1;
+  margin-bottom: 40px;
+`;
+
+const Toolbar = styled(MaterialToolbar)`
+  margin-bottom: 40px;
+`;
+
+const Styles = {
+  GrowingDiv,
+  Toolbar,
+};
+
+export default Styles;
