@@ -1,29 +1,19 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Button } from "components";
-import { selectBooksBasket } from "features/books/booksSlice";
 
 import * as Styles from "./styles";
 
-export default function SimpleModal() {
-  const BooksBasket = useSelector(selectBooksBasket);
+type Props = {
+  modalOpened: boolean;
+  setModalOpened: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => {
-    if (BooksBasket.length > 0) {
-      return;
-    } else {
-      setOpen(true);
-    }
-  };
-
+const SimpleModal: React.FC<Props> = ({ modalOpened, setModalOpened }) => {
   const handleClose = () => {
-    setOpen(false);
+    setModalOpened(false);
   };
 
   const body = (
@@ -34,7 +24,7 @@ export default function SimpleModal() {
         produktów.
       </p>
       <Link to="/" style={{ textDecoration: "none" }}>
-        <Button color="primary" variant="contained">
+        <Button color="primary" variant="contained" customVariant="regular">
           Powrót do Sklepu
         </Button>
       </Link>
@@ -43,11 +33,8 @@ export default function SimpleModal() {
 
   return (
     <div>
-      <Button handleClick={handleOpen} color="primary" variant="contained">
-        Dalej
-      </Button>
       <Modal
-        open={open}
+        open={modalOpened}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -56,4 +43,6 @@ export default function SimpleModal() {
       </Modal>
     </div>
   );
-}
+};
+
+export default SimpleModal;

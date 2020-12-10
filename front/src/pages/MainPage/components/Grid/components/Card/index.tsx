@@ -7,21 +7,16 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import { DataItem } from "interfaces/books";
+
 import * as Styles from "./styles";
 
-interface Book {
-  book: {
-    author: string;
-    cover_url: string;
-    id: number;
-    pages: number;
-    price: number;
-    title: string;
-  };
+type Props = {
+  book: Required<DataItem>;
   handleClick: (book: object) => void;
-}
+};
 
-const Card: FC<Book> = ({ book, handleClick }) => {
+const Card: FC<Props> = ({ book, handleClick }) => {
   const { cover_url, title, author, pages } = book;
   return (
     <Styles.CardMaterial>

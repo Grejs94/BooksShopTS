@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core/styles";
 import styled from "@emotion/styled";
 import {
   MenuItem as MaterialMenuItem,
@@ -7,11 +6,11 @@ import {
 
 import { theme } from "assets/theme";
 
-const { media, css } = theme;
+const { media, font } = theme;
 
 export const MenuItem = styled(MaterialMenuItem)`
   ${media.sm} {
-    ${css.md_text}
+    font-size: ${font.size.xs};
     padding: 0 8px;
     min-height: 18px;
   }
@@ -21,10 +20,3 @@ export const IconButton = styled(MaterialIconButton)`
   min-width: 0;
   padding: 5px 5px 0 0;
 `;
-
-// export const useStyles = makeStyles((theme) => ({
-//   button: {
-//     minWidth: 0,
-//     padding: "5px 5px 0 0",
-//   },
-// }));

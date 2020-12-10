@@ -1,8 +1,7 @@
-export const showPrice = (number: number): string => {
-  const mainPrice = number.toString().substr(0, 2);
+export const showPrice = (price: number): string => {
+  const mainPrice = price.toString().substr(0, 2);
 
-  const restPrice = number.toString().substr(2);
+  const restPrice = price.toString().substr(2);
 
-  const newPrice = `${mainPrice},${restPrice}`;
-  return newPrice;
+  return `${mainPrice},${restPrice}`;
 };

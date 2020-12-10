@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 import { theme } from "assets/theme";
 
-const { colors, media } = theme;
+const { media } = theme;
 
 const btn = (light: string, dark: string) => css`
   white-space: nowrap;
@@ -55,7 +55,7 @@ export default styled.div`
 
       line-height: 2em;
       margin: 5px;
-      & > label {
+      > label {
         color: #333;
         width: 110px;
         font-size: 1em;

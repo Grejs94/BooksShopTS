@@ -1,6 +1,8 @@
+import { DataItem, BasketItem } from "interfaces/books";
+
 interface InitialState {
-  data: object[];
-  basket: any[];
+  data: DataItem[];
+  basket: BasketItem[];
   orderCompleted: boolean;
   status: string;
   sendStatus: string;

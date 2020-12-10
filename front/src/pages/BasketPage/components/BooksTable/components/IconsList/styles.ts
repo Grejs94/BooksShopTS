@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 import { theme } from "assets/theme";
 
-const { media, css } = theme;
+const { media, font } = theme;
 
 export const Wrapper = styled.div`
   display: flex;
@@ -23,10 +23,9 @@ export const Input = styled.input`
   height: 25px;
   border: none;
   padding: 0;
-  ${css.md_text}
-
+  font-size: ${font.size.base};
   ${media.sm} {
     margin: 0;
-    ${css.xs_text}
+    font-size: ${font.size.xs};
   }
 `;

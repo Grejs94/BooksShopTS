@@ -12,7 +12,6 @@
 /build
 
 # misc
-front/.eslintcache
 .eslintcache
 .DS_Store
 .env.local

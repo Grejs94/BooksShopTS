@@ -6,20 +6,11 @@ import {
   addItemToBasket,
   selectBooksFetchStatus,
   selectBooksData,
-  setOrderNotCompleted,
+  setOrderCompleted,
 } from "features/books/booksSlice";
+import { BasketItem } from "interfaces/books";
 
 import { Card } from "./components/index";
-
-interface Book {
-  author: string;
-  cover_url: string;
-  currency: string;
-  id: number;
-  pages: number;
-  price: number;
-  title: string;
-}
 
 export default function SpacingGrid() {
   const dispatch = useDispatch();
@@ -27,9 +18,9 @@ export default function SpacingGrid() {
 
   const data = useSelector(selectBooksData);
 
-  const handleclick = (item: Book) => {
+  const handleclick = (item: BasketItem) => {
     dispatch(addItemToBasket(item));
-    dispatch(setOrderNotCompleted());
+    dispatch(setOrderCompleted(false));
   };
 
   if (status === "failed") {
@@ -48,7 +39,7 @@ export default function SpacingGrid() {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid container justify="center" spacing={2}>
-          {data.map((book: Book) => {
+          {data.map((book: BasketItem) => {
             return (
               <Grid key={book.id} item>
                 <Card book={book} handleClick={() => handleclick(book)} />

@@ -10,7 +10,9 @@ const Toolbar = styled(MaterialToolbar)`
   margin-bottom: 40px;
 `;
 
-export default {
+const Styles = {
   GrowingDiv,
   Toolbar,
 };
+
+export default Styles;

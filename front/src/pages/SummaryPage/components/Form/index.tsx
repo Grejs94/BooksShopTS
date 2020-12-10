@@ -29,12 +29,10 @@ const FormComponent = () => {
   const onSubmit = async (values: any) => {
     const { firstName, lastName, city, postalCode } = values;
 
-    const books = basket.map((book: Ibook) => {
-      return {
-        id: book.id,
-        quantity: book.value,
-      };
-    });
+    const books = basket.map((book: Ibook) => ({
+      id: book.id,
+      quantity: book.value,
+    }));
 
     const order = {
       order: books,
@@ -45,7 +43,7 @@ const FormComponent = () => {
     };
 
     dispatch(sendForm(order));
-    dispatch(setOrderCompleted());
+    dispatch(setOrderCompleted(true));
     dispatch(cleanBasket());
   };
 

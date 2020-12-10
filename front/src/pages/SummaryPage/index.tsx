@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Container } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import { Menu, Button } from "components";
 import {
@@ -9,36 +10,37 @@ import {
 } from "features/books/booksSlice";
 
 import { Form } from "./components";
-import { Link } from "react-router-dom";
 
 const Summary = () => {
   const basket = useSelector(selectBooksBasket);
   const orderCompleted = useSelector(selectBooksOrderCompleted);
 
-  const basketIsEmpty = basket.length < 1;
+  const basketIsEmpty = !basket.length;
 
   const orderCompletedBody = (
     <div>
       <p>Twoje zamówienie zostało przyjęte do realizaji</p>
       <Link to="/" style={{ textDecoration: "none" }}>
-        <Button color="primary" variant="contained">
+        <Button color="primary" variant="contained" customVariant="regular">
           Kontynuuj zakupy!
         </Button>
       </Link>
     </div>
   );
 
+  const Body = () => {
+    if (orderCompleted) {
+      return orderCompletedBody;
+    }
+
+    return basketIsEmpty ? <p>Twój koszyk jest pusty</p> : <Form />;
+  };
+
   return (
     <div>
       <Menu title="Podsumowanie" />
       <Container maxWidth="lg">
-        {orderCompleted ? (
-          orderCompletedBody
-        ) : basketIsEmpty ? (
-          "Twój koszyk jest pusty"
-        ) : (
-          <Form />
-        )}
+        <Body />
       </Container>
     </div>
   );
