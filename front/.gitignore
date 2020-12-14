@@ -12,6 +12,10 @@
 /build
 
 # misc
+<<<<<<< HEAD
+=======
+front/.eslintcache
+>>>>>>> dev_1
 .eslintcache
 .DS_Store
 .env.local
