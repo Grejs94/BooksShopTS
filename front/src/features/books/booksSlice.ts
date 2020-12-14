@@ -1,14 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Dispatch } from "redux";
 
 import api from "api/index";
-import { initialState } from "./helperData";
+import { BasketItem, IfetchBooksData, Order } from "interfaces/books";
 
-import { IfetchBooksData, IAddItemToBasket } from "../interfaces/index";
+import { initialState } from "./helperData";
 
 export const booksSlice = createSlice({
   name: "books",
-  initialState: initialState,
+  initialState,
   reducers: {
+    setOrderCompleted: (state, action) => {
+      state.orderCompleted = action.payload;
+    },
     incrementValue: (state, action) => {
       state.basket = state.basket.map((item) => ({
         ...item,
@@ -51,9 +55,18 @@ export const booksSlice = createSlice({
       state.status = "succeeded";
     },
     fetchBooksDataFailed: (state) => {
-      state.status = "failed";
+      state.sendStatus = "failed";
     },
-    addItemToBasket: (state, action: PayloadAction<IAddItemToBasket>) => {
+    sendFormStarted: (state) => {
+      state.sendStatus = "inProgress";
+    },
+    sendFormSucceeded: (state) => {
+      state.sendStatus = "succeeded";
+    },
+    sendFormFailed: (state) => {
+      state.sendStatus = "failed";
+    },
+    addItemToBasket: (state, action: PayloadAction<BasketItem>) => {
       const { id } = action.payload;
       const isInBasket = state.basket.find((item) => item.id === id);
 
@@ -70,6 +83,9 @@ export const booksSlice = createSlice({
           )
         : [...state.basket, item];
     },
+    cleanBasket: (state) => {
+      state.basket = [];
+    },
   },
 });
 
@@ -77,18 +93,37 @@ export const {
   fetchBooksDataStarted,
   fetchBooksDataSucceeded,
   fetchBooksDataFailed,
+  sendFormStarted,
+  sendFormSucceeded,
+  sendFormFailed,
   addItemToBasket,
   incrementValue,
   decrementValue,
   deleteItem,
   setValue,
+  setOrderCompleted,
+  cleanBasket,
 } = booksSlice.actions;
 
-export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
+export const sendForm = (data: Order) => async (dispatch: Dispatch) => {
+  dispatch(sendFormStarted());
+
+  try {
+    await api.books.sendOrder(data);
+    dispatch(sendFormSucceeded());
+  } catch (error) {
+    dispatch(sendFormFailed());
+  }
+};
+
+export const fetchBooks = (pageNumber: number) => async (
+  dispatch: Dispatch
+) => {
   dispatch(fetchBooksDataStarted());
 
   try {
     const data = await api.books.fetchBooks(pageNumber);
+
     dispatch(fetchBooksDataSucceeded(data.data));
   } catch (error) {
     dispatch(fetchBooksDataFailed());
@@ -96,20 +131,14 @@ export const fetchBooks = (pageNumber: number) => async (dispatch: any) => {
 };
 export const selectBooksData = (state: any) => state.books.data;
 export const selectBooksBasket = (state: any) => state.books.basket;
-
-interface Item {
-  author: string;
-  cover_url: string;
-  currency: string;
-  id: number;
-  pages: number;
-  price: number;
-  title: string;
-  value: number;
-}
+export const selectBooksOrderCompleted = (state: any) =>
+  state.books.orderCompleted;
 
 export const selectBooksBasketValue = (state: any) =>
-  state.books.basket.reduce((acc: number, item: Item) => acc + item.value, 0);
+  state.books.basket.reduce(
+    (acc: number, item: BasketItem) => acc + item.value,
+    0
+  );
 
 export const selectBooksFetchStatus = (state: any) => state.books.status;
 

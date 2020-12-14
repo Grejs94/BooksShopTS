@@ -1,7 +1,7 @@
 const apiUrls = {
-  develop: "http://localhost:3001/api/book?page=",
+  develop: "http://localhost:3001/api",
 };
 
 export const config = {
-  url: apiUrls.develop,
+  url: `${apiUrls.develop}`,
 };

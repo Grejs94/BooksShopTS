@@ -26,6 +26,10 @@ const IconsList: React.FC<Props> = ({ value, id }) => {
     dispatch(decrementValue(id));
   };
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setValue({ id: id, value: e.target.value }));
+  };
+
   return (
     <Styles.Wrapper>
       <Button
@@ -36,12 +40,7 @@ const IconsList: React.FC<Props> = ({ value, id }) => {
       >
         -
       </Button>
-      <Styles.Input
-        value={value}
-        onChange={(e: any) =>
-          dispatch(setValue({ id: id, value: e.target.value }))
-        }
-      />
+      <Styles.Input value={value} onChange={handleOnChange} />
       <Button
         handleClick={() => dispatch(incrementValue(id))}
         color="primary"

@@ -1,1 +1,1 @@
-export { default } from "./booksSlice.tsx";
+export { default } from "./booksSlice.ts";

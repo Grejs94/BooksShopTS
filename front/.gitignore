@@ -13,9 +13,12 @@
 
 # misc
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 front/.eslintcache
 >>>>>>> dev_1
+=======
+>>>>>>> dev_finish
 .eslintcache
 .DS_Store
 .env.local
