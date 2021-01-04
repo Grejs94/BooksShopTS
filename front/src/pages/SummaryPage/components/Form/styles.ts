@@ -37,7 +37,7 @@ const btnDefault = css`
 
 const btnPrimary = btn("#4f93ce", "#285f8f");
 
-export default styled.div`
+export const Container = styled.div`
   form {
     max-width: 500px;
     margin: 10px auto;
@@ -116,4 +116,24 @@ export default styled.div`
       padding: 20px;
     }
   }
+`;
+
+export const Input = styled.input`
+  flex: 1;
+  padding: 3px 5px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+`;
+
+export const FieldContainer = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  line-height: 2em;
+  margin: 5px;
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-grow: 1;
 `;

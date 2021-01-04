@@ -9,9 +9,17 @@ import {
   setOrderCompleted,
   cleanBasket,
 } from "features/books/booksSlice";
-import Styles from "./styles";
 
-const FormComponent = () => {
+import {
+  composeValidators,
+  isRequired,
+  isValidEmail,
+  isValidLastName,
+} from "./validation";
+import { TextInput } from "./TextInput";
+import * as Styled from "./styles";
+
+const FormComponent: React.FC = () => {
   const dispatch = useDispatch();
   const basket = useSelector(selectBooksBasket);
 
@@ -48,37 +56,54 @@ const FormComponent = () => {
   };
 
   return (
-    <Styles>
+    <Styled.Container>
       <Form
         onSubmit={onSubmit}
         initialValues={{}}
-        render={({ handleSubmit, submitting, pristine, form }) => (
+        render={({
+          handleSubmit,
+          submitting,
+          pristine,
+          form,
+          submitFailed,
+          submitError,
+        }) => (
           <form
             onSubmit={(e) => {
               handleSubmit(e);
-              setTimeout(() => {
-                form.reset();
-              }, 1000);
+              // setTimeout(() => {
+              //   form.reset();
+              // }, 1000);
+
+              // /\d{2}-\d{3}/
+
+              //               first_name: ""first_name" length must be at least 4 characters long"
+              // last_name: ""last_name" length must be at least 5 characters long"
             }}
           >
-            <div>
+            <Styled.FieldContainer>
               <label>Imię</label>
-              <Field
-                name="firstName"
-                component="input"
-                type="text"
-                placeholder="First Name"
-              />
-            </div>
-            <div>
-              <label>Nazwisko</label>
-              <Field
-                name="lastName"
-                component="input"
-                type="text"
-                placeholder="Last Name"
-              />
-            </div>
+              <Field name="firstName" validate={isRequired}>
+                {({ input, meta }) => (
+                  <Styled.InputContainer>
+                    <Styled.Input
+                      {...input}
+                      type="text"
+                      placeholder="First Name"
+                    />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                  </Styled.InputContainer>
+                )}
+              </Field>
+            </Styled.FieldContainer>
+            <Field
+              name="lastName"
+              component={TextInput}
+              type="text"
+              placeholder="Last Name"
+              label="Nazwisko"
+              validate={composeValidators(isRequired, isValidLastName)}
+            />
             <div>
               <label>Miejscowość</label>
               <Field
@@ -86,6 +111,7 @@ const FormComponent = () => {
                 component="input"
                 type="text"
                 placeholder="Last Name"
+                validate={composeValidators(isRequired)}
               />
             </div>
             <div>
@@ -95,9 +121,9 @@ const FormComponent = () => {
                 component="input"
                 type="text"
                 placeholder="Last Name"
+                validate={isRequired}
               />
             </div>
-
             <div className="buttons">
               <div className="buttonContainer">
                 <Link to="/BasketPage">
@@ -113,7 +139,7 @@ const FormComponent = () => {
           </form>
         )}
       />
-    </Styles>
+    </Styled.Container>
   );
 };
 
